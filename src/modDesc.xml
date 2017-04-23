@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="37">
+    <author>Peppe978, TyKonKet</author>
+    <version>1.0.0</version>
+    <title>
+        <en>Tow Bar</en>
+        <it>Barra Traino</it>
+    </title>
+    <description>
+        <en>With the Tow Bar you can pull vehicles.</en>
+        <de>Mit der Tow Bar können Sie Fahrzeuge ziehen.</de>
+        <fr>Avec la barre de remorquage, vous pouvez tirer des véhicules.</fr>
+        <it>Con la Barra Traino puoi trainare i veicoli.</it>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+    <multiplayer supported="true"/>
+    <l10n>
+        <text name="PULLER_DETACH">
+            <en>Detach object</en>
+            <it>Sgancia oggetto</it>
+            <de>Objekt löschen</de>
+            <fr>Détacher l'objet</fr>
+        </text>
+        <text name="PULLER_ATTACH">
+            <en>Attach object</en>
+            <it>Aggancia oggetto</it>
+            <de>Objekt anbringen</de>
+            <fr>Joindre l'objet</fr>
+        </text>
+    </l10n>
+    <specializations>
+        <specialization name="puller" className="Puller" filename="scripts/puller.lua"/>
+    </specializations>
+    <vehicleTypes>
+        <type name="puller" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
+            <specialization name="attacherJoints" />
+            <specialization name="lights" />
+            <specialization name="attachable" />
+            <specialization name="washable" />
+            <specialization name="puller" />
+        </type>
+    </vehicleTypes>
+    <storeItems>
+        <storeItem xmlFilename="Comear.xml" rootNode="vehicle"/>
+    </storeItems>
+    <brands>
+        <brand name="COMEAR" title="Comear" image="brand_COMEAR.dds"/>
+    </brands>
+</modDesc>

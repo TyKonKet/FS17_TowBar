@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="barra traino" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="GIANTS Editor 64bit" version="7.1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="2" filename="texture/barra.dds" relativePath="true"/>
+    <File fileId="3" filename="texture/barra_Normal.dds" relativePath="true"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="lambert1" materialId="6" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
+    </Material>
+    <Material name="barra1" materialId="7" ambientColor="1 1 1" cosPower="20" specularColor="0.5 0.5 0.5">
+      <Texture fileId="2"/>
+      <Normalmap fileId="3"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="Barra_traino.i3d.shapes">
+  </Shapes>
+
+
+  <Dynamics>
+  </Dynamics>
+
+  <Scene>
+    <Shape shapeId="1" name="towbar" dynamic="true" compound="true" collisionMask="8397058" clipDistance="300" nodeId="13" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true">
+      <Shape shapeId="2" name="bar" nodeId="14" materialIds="7" castsShadows="true" receiveShadows="true">
+        <Shape shapeId="3" name="backAttach" translation="0 0 -1.656" nodeId="15" materialIds="7" castsShadows="true" receiveShadows="true">
+          <TransformGroup name="pullJoint" rotation="0 -90 0" nodeId="16"/>
+        </Shape>
+        <Shape shapeId="4" name="frontAttach" translation="0 0 1.656" nodeId="17" materialIds="7" castsShadows="true" receiveShadows="true">
+          <TransformGroup name="inputJoint" rotation="0 90 0" nodeId="18"/>
+        </Shape>
+      </Shape>
+    </Shape>
+    <Light name="Peppe978" rotation="-40 0 -30" visibility="false" clipDistance="300" nodeId="19" type="directional" color="1 1 1" emitDiffuse="true" emitSpecular="true" castShadowMap="true" depthMapBias="0.001" depthMapSlopeScaleBias="0.005" depthMapSlopeClamp="0.02" depthMapResolution="1024" shadowFarDistance="80" shadowExtrusionDistance="200" shadowPerspective="false" decayRate="4" range="500"/>
+  </Scene>
+
+</i3D>

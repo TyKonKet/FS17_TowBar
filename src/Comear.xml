@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<vehicle type="puller">
+    <annotation>Copyright (C) Team FSI Modding</annotation>
+    <storeData>
+        <name>
+            <en>Tow Bar</en>
+            <it>Barra Traino</it>
+        </name>
+        <functions>
+            <function>With the Tow Bar you can pull vehicles.</function>
+        </functions>
+        <image>store.dds</image>
+        <price>1000</price>
+        <dailyUpkeep>5</dailyUpkeep>
+        <lifetime>1200</lifetime>
+        <rotation>0</rotation>
+        <brand>COMEAR</brand>
+        <category>misc</category>
+    </storeData>
+    <filename>Barra_traino.i3d</filename>
+    <size width="0.1" length="3" lengthOffset="0" />
+    <attachSound file="$data/sounds/attach.wav" pitchOffset="1.0" volume="1.0" indoorVolumeFactor="0.35" indoorLowpassGain="0.75" />
+    <grabbable isGrabbable="true" isGrabbableOnlyIfDetach="false" />
+    <puller index="0>0|0|0" rootNode="0>" attachRadius="1" />
+    <inputAttacherJoints>
+        <inputAttacherJoint index="0>0|1|0" jointType="trailer" upperRotLimitScale="1 0.35 1" lowerRotLimitScale="1 0.35 1" />
+    </inputAttacherJoints>
+    <washable dirtDuration="10" washDuration="1" workMultiplier="5" />
+    <components count="1">
+        <component1 centerOfMass="0 0 0" solverIterationCount="10" />
+    </components>
+    <schemaOverlay file="$dataS2/menu/schemas/implementSchema.png" fileSelected="$dataS2/menu/schemas/implementSchemaSelected.png" width="0.5" height="0.5" attacherJointPosition="0 0" />
+</vehicle>
