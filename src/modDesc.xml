@@ -5,12 +5,21 @@
     <title>
         <en>Tow Bar</en>
         <it>Barra Traino</it>
+        <de>Abschleppstange</de>
     </title>
     <description>
-        <en>With the Tow Bar you can pull vehicles.</en>
-        <de>Mit der Tow Bar können Sie Fahrzeuge ziehen.</de>
-        <fr>Avec la barre de remorquage, vous pouvez tirer des véhicules.</fr>
-        <it>Con la Barra Traino puoi trainare i veicoli.</it>
+        <en>
+            <![CDATA[With the Tow Bar you can pull vehicles.]]>
+        </en>
+        <de>
+            <![CDATA[Mit der Abschleppstange können Sie Fahrzeuge ziehen.]]>
+        </de>
+        <fr>
+            <![CDATA[Avec la barre de remorquage, vous pouvez tirer des véhicules.]]>
+        </fr>
+        <it>
+            <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
+        </it>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
