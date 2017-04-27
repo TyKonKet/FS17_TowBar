@@ -12,9 +12,9 @@
 
 
   <Materials>
-    <Material name="lambert1" materialId="6" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
+    <Material name="lambert1" materialId="7" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
     </Material>
-    <Material name="barra1" materialId="7" ambientColor="1 1 1" cosPower="20" specularColor="0.5 0.5 0.5">
+    <Material name="barra1" materialId="6" ambientColor="1 1 1" cosPower="20" specularColor="0.5 0.5 0.5">
       <Texture fileId="2"/>
       <Normalmap fileId="3"/>
     </Material>
@@ -29,12 +29,12 @@
   </Dynamics>
 
   <Scene>
-    <Shape shapeId="1" name="towbar" dynamic="true" compound="true" collisionMask="8397058" clipDistance="300" nodeId="13" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true">
-      <Shape shapeId="2" name="bar" nodeId="14" materialIds="7" castsShadows="true" receiveShadows="true">
-        <Shape shapeId="3" name="backAttach" translation="0 0 -1.656" nodeId="15" materialIds="7" castsShadows="true" receiveShadows="true">
+    <Shape shapeId="1" name="towbar" dynamic="true" compound="true" collisionMask="8397058" clipDistance="300" nodeId="13" materialIds="7" castsShadows="true" receiveShadows="true" nonRenderable="true">
+      <Shape shapeId="2" name="bar" nodeId="14" materialIds="6" castsShadows="true" receiveShadows="true">
+        <Shape shapeId="3" name="backAttach" translation="0 0 -1.656" nodeId="15" materialIds="6" castsShadows="true" receiveShadows="true">
           <TransformGroup name="pullJoint" rotation="0 -90 0" nodeId="16"/>
         </Shape>
-        <Shape shapeId="4" name="frontAttach" translation="0 0 1.656" nodeId="17" materialIds="7" castsShadows="true" receiveShadows="true">
+        <Shape shapeId="4" name="frontAttach" translation="0 0 1.656" nodeId="17" materialIds="6" castsShadows="true" receiveShadows="true">
           <TransformGroup name="inputJoint" rotation="0 90 0" nodeId="18"/>
         </Shape>
       </Shape>
