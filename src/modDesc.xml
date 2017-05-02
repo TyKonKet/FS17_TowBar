@@ -7,6 +7,7 @@
         <it>Barra Traino</it>
         <de>Abschleppstange</de>
         <fr>Barre de remorquage</fr>
+        <nl>Trekstang</nl>
     </title>
     <description>
         <en>
@@ -31,6 +32,14 @@ Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X 
         <it>
             <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
         </it>
+        <en>
+            <![CDATA[Je kunt voertuigen trekken met deze trekstang.
+
+Gebruik je handen om de trekstang in de juiste positie te brengen.
+Koppel het groene einde aan de tractor met de knop Q.
+Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te koppelen.
+]]>
+        </en>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
@@ -40,12 +49,14 @@ Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X 
             <it>Sgancia oggetto</it>
             <de>Objekt löschen</de>
             <fr>Détacher l'objet</fr>
+            <nl>Ontkoppel voorwerp</nl>
         </text>
         <text name="PULLER_ATTACH">
             <en>Attach object</en>
             <it>Aggancia oggetto</it>
             <de>Objekt anbringen</de>
             <fr>Joindre l'objet</fr>
+            <nl>Koppel voorwerp</nl>
         </text>
     </l10n>
     <specializations>
@@ -66,4 +77,7 @@ Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X 
     <brands>
         <brand name="COMEAR" title="Comear" image="brand_COMEAR.dds"/>
     </brands>
+    <translatedBy>
+        <nl>FarmingvidsHD</nl>
+    </translatedBy>
 </modDesc>
