@@ -18,15 +18,67 @@
         <brand>COMEAR</brand>
         <category>misc</category>
     </storeData>
-    <filename>Barra_traino.i3d</filename>
-    <size width="0.1" length="3" lengthOffset="0" />
+    <filename>towbar.i3d</filename>
+    <size width="5" length="3" lengthOffset="0" />
     <attachSound file="$data/sounds/attach.wav" pitchOffset="1.0" volume="1.0" indoorVolumeFactor="0.35" indoorLowpassGain="0.75" />
     <grabbable isGrabbable="true" isGrabbableOnlyIfDetach="false" />
     <puller index="0>0|0|0" rootNode="0>" attachRadius="1.5" />
     <inputAttacherJoints>
         <inputAttacherJoint index="0>0|1|0" jointType="trailer" upperRotLimitScale="1 0.35 1" lowerRotLimitScale="1 0.35 1" />
     </inputAttacherJoints>
-    <washable dirtDuration="10" washDuration="1" workMultiplier="5" />
+    <!--<lengthConfigurations>
+        <lengthConfiguration name="Short" price="0" />
+        <lengthConfiguration name="Medium" price="200" scaleNode="0>0" scale=""/>
+        <lengthConfiguration name="Long" price="500" scaleNode="0>0" scale=""/>
+    </lengthConfigurations>-->
+    <designConfigurations>
+        <designConfiguration name="$l10n_configuration_valueDefault" price="0">
+            <objectChange node="0>0|3|0" visibilityActive="true" visibilityInactive="false"/>
+        </designConfiguration>
+        <designConfiguration name="$l10n_configuration_valueDesign01" price="100" icon="$dataS2/menu/hud/configurations/config_edition.png">
+            <objectChange node="0>0|3|1" visibilityActive="true" visibilityInactive="false"/>
+        </designConfiguration>
+        <designConfiguration name="$l10n_configuration_valueDesign02" price="100" icon="$dataS2/menu/hud/configurations/config_edition.png">
+            <objectChange node="0>0|3|2" visibilityActive="true" visibilityInactive="false"/>
+        </designConfiguration>
+        <designConfiguration name="$l10n_configuration_valueDesign03" price="50" icon="$dataS2/menu/hud/configurations/config_edition.png">
+            <objectChange node="0>0|3|3" visibilityActive="true" visibilityInactive="false"/>
+        </designConfiguration>
+    </designConfigurations>
+    <designColorConfigurations useDefaultColors="false">
+        <designColorConfiguration color="0.8796 0.0061 0.0040 1" />
+        <designColorConfiguration color="0.2705 0.3372 0.3613 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.1022 0.1590 0.1683 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0704 0.0865 0.0908 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0319 0.0452 0.0513 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0110 0.0110 0.0110 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.9301 0.7605 0.0232 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.8879 0.5972 0.0018 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.8469 0.3419 0.0110 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.9975 0.2478 0.0217 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.6105 0.0130 0.0130 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.2961 0.0061 0.0061 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.1529 0.0044 0.0048 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0467 0.2832 0.8388 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0044 0.1500 0.6376 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0000 0.1166 0.4098 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0000 0.0280 0.1875 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.3664 0.6321 0.0203 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0475 0.3204 0.0103 1" price="250" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0781 0.2233 0.0478 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0116 0.0944 0.0319 1" price="150" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.2384 0.1878 0.0437 1" price="100" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.1195 0.0097 0.0307 1" price="100" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <designColorConfiguration color="0.0130 0.0578 0.1195 1" price="100" icon="$dataS2/menu/hud/configurations/config_color.png" />
+        <colorNode node="0>0|3|0|0" />
+        <colorNode node="0>0|3|0|1" />
+        <colorNode node="0>0|3|1|0" />
+        <colorNode node="0>0|3|1|1" />
+        <colorNode node="0>0|3|2|0" />
+        <colorNode node="0>0|3|2|1" />
+        <colorNode node="0>0|3|3|0" />
+    </designColorConfigurations>
+    <washable dirtDuration="50" washDuration="1" workMultiplier="5" />
     <components count="1">
         <component1 centerOfMass="0 0 0" solverIterationCount="10" />
     </components>

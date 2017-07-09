@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="TowBar" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="GIANTS Editor 64bit" version="7.1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="6" filename="shaders/vehicleShader.xml" relativePath="true"/>
+    <File fileId="5" filename="textures/rough_cube.dds" relativePath="true"/>
+    <File fileId="2" filename="textures/towbar_diffuse.dds" relativePath="true"/>
+    <File fileId="3" filename="textures/towbar_normal.dds" relativePath="true"/>
+    <File fileId="4" filename="textures/towbar_specular.dds" relativePath="true"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="lambert1" materialId="6" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
+    </Material>
+    <Material name="barra1" materialId="8" ambientColor="1 1 1" cosPower="50" specularColor="1 1 1" customShaderId="6">
+      <Texture fileId="2"/>
+      <Normalmap fileId="3"/>
+      <Glossmap fileId="4"/>
+      <Reflectionmap fileId="5" lodDistanceScaling="0.5" viewDistanceScaling="0.5" type="cube" scaling="1" refractiveIndex="1" bumpScale="0.5" shapesObjectMask="4294967295" lightsObjectMask="4294967295"/>
+      <CustomParameter name="RDT" value="0 0 20 20"/>
+      <CustomParameter name="RDTColor" value="0.09 0.08 0.04 0"/>
+    </Material>
+    <Material name="strips" materialId="9" ambientColor="1 1 1" cosPower="50" specularColor="1 1 1" customShaderId="6" customShaderVariation="colorMask">
+      <Texture fileId="2"/>
+      <Normalmap fileId="3"/>
+      <Glossmap fileId="4"/>
+      <Reflectionmap fileId="5" lodDistanceScaling="0.5" viewDistanceScaling="0.5" type="cube" scaling="1" refractiveIndex="1" bumpScale="0.5" shapesObjectMask="4294967295" lightsObjectMask="4294967295"/>
+      <CustomParameter name="RDT" value="0 0 20 20"/>
+      <CustomParameter name="RDTColor" value="0.09 0.08 0.04 0"/>
+      <CustomParameter name="colorScale" value="1 0 0 1"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="towbar.i3d.shapes">
+  </Shapes>
+
+
+  <Dynamics>
+  </Dynamics>
+
+  <Scene>
+    <Shape shapeId="1" name="towbar" scale="0.9 0.9 0.9" dynamic="true" compound="true" collisionMask="2105410" clipDistance="300" nodeId="17" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true">
+      <Shape shapeId="2" name="bar" scale="0.7 0.7 0.7" nodeId="18" materialIds="8" castsShadows="true" receiveShadows="true">
+        <Shape shapeId="3" name="backAttach" translation="0 0 -1.638" scale="0.8 0.7 0.7" nodeId="19" materialIds="8" castsShadows="true" receiveShadows="true">
+          <TransformGroup name="pullJoint" rotation="0 -90 0" nodeId="20"/>
+        </Shape>
+        <Shape shapeId="4" name="frontAttach" translation="0 0 1.638" scale="0.8 0.7 0.7" nodeId="21" materialIds="8" castsShadows="true" receiveShadows="true">
+          <TransformGroup name="inputJoint" rotation="0 90 0" nodeId="22"/>
+        </Shape>
+        <TransformGroup name="collision" nodeId="23">
+          <Shape shapeId="5" name="collision" compoundChild="true" collisionMask="2105410" density="0.001" clipDistance="0" nodeId="24" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true"/>
+        </TransformGroup>
+        <TransformGroup name="design" nodeId="25">
+          <TransformGroup name="designFront" nodeId="26">
+            <Shape shapeId="6" name="frontStrips" translation="0 0 0.66" scale="1.02 1.02 0.5" nodeId="27" materialIds="9" castsShadows="true" receiveShadows="true"/>
+            <Shape shapeId="6" name="backStrips" translation="0 0 -0.23" scale="1.02 1.02 0.5" nodeId="28" materialIds="9" castsShadows="true" receiveShadows="true"/>
+          </TransformGroup>
+          <TransformGroup name="designFrontSlim" visibility="false" nodeId="29">
+            <Shape shapeId="6" name="backStrips" translation="0 0 -0.324218" scale="1.02 1.02 0.4" nodeId="41" materialIds="9" castsShadows="true" receiveShadows="true"/>
+            <Shape shapeId="6" name="frontStrips" translation="0 0 0.745623" scale="1.02 1.02 0.4" nodeId="42" materialIds="9" castsShadows="true" receiveShadows="true"/>
+          </TransformGroup>
+          <TransformGroup name="designMiddle" visibility="false" nodeId="32">
+            <Shape shapeId="6" name="backStrips" translation="0 0 -0.4" scale="1.02 1.02 0.3" nodeId="33" materialIds="9" castsShadows="true" receiveShadows="true"/>
+            <Shape shapeId="6" name="frontStrips" translation="0 0 0.4" scale="1.02 1.02 0.3" nodeId="34" materialIds="9" castsShadows="true" receiveShadows="true"/>
+          </TransformGroup>
+          <TransformGroup name="designSingle" visibility="false" nodeId="35">
+            <Shape shapeId="6" name="middleStrips" scale="1.02 1.02 1" nodeId="36" materialIds="9" castsShadows="true" receiveShadows="true"/>
+          </TransformGroup>
+        </TransformGroup>
+      </Shape>
+    </Shape>
+    <Light name="light" rotation="-40 0 -30" nodeId="37" type="directional" color="1 1 1" emitDiffuse="true" emitSpecular="true" castShadowMap="true" depthMapBias="0.0012" depthMapSlopeScaleBias="2" depthMapSlopeClamp="0.0005" depthMapResolution="1024" shadowFarDistance="80" shadowExtrusionDistance="200" shadowPerspective="false" numShadowMapSplits="3" shadowMapSplitDistancesParameter="0.4" decayRate="4" range="500"/>
+  </Scene>
+
+</i3D>

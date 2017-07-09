@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="37">
     <author>Peppe978, TyKonKet</author>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <title>
         <en>Tow Bar</en>
         <it>Barra Traino</it>
@@ -61,6 +61,7 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
     </l10n>
     <specializations>
         <specialization name="puller" className="Puller" filename="scripts/puller.lua"/>
+        <specialization name="configurable" className="Configurable" filename="scripts/configurable.lua"/>
     </specializations>
     <vehicleTypes>
         <type name="puller" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
@@ -68,6 +69,7 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
             <specialization name="lights" />
             <specialization name="attachable" />
             <specialization name="washable" />
+            <specialization name="configurable" />
             <specialization name="puller" />
         </type>
     </vehicleTypes>
