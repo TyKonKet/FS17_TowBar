@@ -16,6 +16,11 @@
 Use your hands to bring the tow bar in place.
 Attach the green end to the tractor with button Q.
 Drive to the desired tractor which needs to be towed and press X to attach it.
+
+Changelog 1.1.0
+- Improved textures
+- Design customizable in shop
+- Color customizable in shop
 ]]>
         </en>
         <de>
@@ -24,22 +29,37 @@ Drive to the desired tractor which needs to be towed and press X to attach it.
 Mit der Hand kann die Stange getragen werden.
 Mit der grünen Seite am Zugfahrzeug per Taste Q die Abschleppstange anhängen.
 Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X befestigen.
+
+Changelog 1.1.0
+- Verbesserte Texturen
+- Design anpassbar im Shop
+- Farbe kundengerecht im Geschäft
 ]]>
         </de>
         <fr>
-            <![CDATA[Avec la barre de remorquage, vous pouvez tirer des véhicules.]]>
+            <![CDATA[Avec la barre de remorquage, vous pouvez tirer des véhicules.
+
+Utilisez vos mains pour mettre la barre de remorquage en place.
+Fixez l'extrémité verte au tracteur avec le bouton Q.
+Dirigez-vous vers le tracteur souhaité qui doit être remorqué et appuyez sur X pour l'attacher.
+
+Changelog 1.1.0
+- Amélioration des textures
+- Design personnalisable dans le magasin
+- Couleur personnalisable dans le magasin
+            ]]>
         </fr>
-        <it>
-            <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
-        </it>
-        <en>
+        <nl>
             <![CDATA[Je kunt voertuigen trekken met deze trekstang.
 
 Gebruik je handen om de trekstang in de juiste positie te brengen.
 Koppel het groene einde aan de tractor met de knop Q.
 Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te koppelen.
 ]]>
-        </en>
+        </nl>
+        <it>
+            <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
+        </it>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
