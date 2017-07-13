@@ -8,6 +8,7 @@
         <de>Abschleppstange</de>
         <fr>Barre de remorquage</fr>
         <nl>Trekstang</nl>
+        <pl>Sztywny Hol</pl>
     </title>
     <description>
         <en>
@@ -60,6 +61,19 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
         <it>
             <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
         </it>
+        <pl>
+            <![CDATA[Sztywny hol pozwala holować pojazdy.
+
+Hol można przenieść na miejsce w rękach.
+Zielony koniec zaczepia się do traktora za pomocą klawisza Q.
+Należy podjechać pod traktor, który ma być holowany i zaczepić go za pomocą X.
+
+Dziennik zmian w wersji 1.1.0
+- Poprawione tektury
+- Wybór wzoru w sklepie
+- Wybór koloru w sklepie
+]]>
+        </pl>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
@@ -70,6 +84,7 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
             <de>Objekt löschen</de>
             <fr>Détacher l'objet</fr>
             <nl>Ontkoppel voorwerp</nl>
+            <pl>Odczep obiekt</pl>
         </text>
         <text name="PULLER_ATTACH">
             <en>Attach object</en>
@@ -77,6 +92,7 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
             <de>Objekt anbringen</de>
             <fr>Joindre l'objet</fr>
             <nl>Koppel voorwerp</nl>
+            <pl>Zaczep obiekt</pl>
         </text>
     </l10n>
     <specializations>
@@ -101,5 +117,6 @@ Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te k
     </brands>
     <translatedBy>
         <nl>FarmingvidsHD</nl>
+        <pl>Dzi4d3k</pl>
     </translatedBy>
 </modDesc>
