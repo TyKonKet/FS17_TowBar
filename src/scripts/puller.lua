@@ -10,8 +10,13 @@ function Puller.prerequisitesPresent(specializations)
     return true;
 end
 
-function Puller:load(savegame)
+function Puller:preLoad(savegame)
+    self.getAttachmentsSaveNodes = Utils.overwrittenFunction(self.getAttachmentsSaveNodes, Puller.getAttachmentsSaveNodes);
+    self.loadAttachmentFromNodes = Utils.overwrittenFunction(self.loadAttachmentFromNodes, Puller.loadAttachmentFromNodes);
     self.canBeGrabbed = Puller.canBeGrabbed;
+end
+
+function Puller:load(savegame)
     self.isGrabbable = Utils.getNoNil(getXMLBool(self.xmlFile, "vehicle.grabbable#isGrabbable"), false);
     self.isGrabbableOnlyIfDetach = Utils.getNoNil(getXMLBool(self.xmlFile, "vehicle.grabbable#isGrabbableOnlyIfDetach"), false);
     self.attachPoint = Utils.indexToObject(self.components, getXMLString(self.xmlFile, "vehicle.puller#index"));
@@ -20,6 +25,38 @@ function Puller:load(savegame)
     self.isAttached = false;
     self.joint = {};
     self.inRangeVehicle = nil;
+end
+
+function Puller:getAttachmentsSaveNodes(superFunc, nodeIdent, vehiclesToId)
+    local nodes = "";
+    if superFunc ~= nil then
+        nodes = superFunc(self, nodeIdent, vehiclesToId);
+    end
+    local id = vehiclesToId[self];
+    if id ~= nil and self.joint ~= nil then
+        local object = self.joint.object;
+        if object ~= nil and vehiclesToId[object] ~= nil and self.joint.attacherJointId ~= nil then
+            nodes = nodes .. nodeIdent .. '<attachment id0="' .. id .. '" id1="' .. vehiclesToId[object] .. '" jointId="' .. self.joint.attacherJointId .. '" type="towbar" />\n';            
+        end
+    end
+    return nodes;
+end
+
+function Puller:loadAttachmentFromNodes(superFunc, xmlFile, key, idsToVehicle)
+    if superFunc ~= nil then
+        superFunc(self, xmlFile, key, idsToVehicle);
+    end
+    local type = getXMLString(xmlFile, key .. "#type");
+    if type == "towbar" then
+        local id1 = getXMLString(xmlFile, key .. "#id1");
+        local jointId = getXMLInt(xmlFile, key .. "#jointId");
+        if id1 ~= nil and jointId ~= nil then
+            local vehicle1 = idsToVehicle[id1];
+            if vehicle1 ~= nil then
+                Puller.onAttachObject(self, vehicle1, jointId, true);
+            end
+        end
+    end
 end
 
 function Puller:delete()
@@ -52,7 +89,7 @@ function Puller:update(dt)
         if self.inRangeVehicle ~= nil then
             if not self.isAttached then
                 if InputBinding.hasEvent(InputBinding.IMPLEMENT_EXTRA2) then
-                    Puller.onAttachObject(self, self.inRangeVehicle.vehicle, self.inRangeVehicle.index, nil);
+                    Puller.onAttachObject(self, self.inRangeVehicle.vehicle, self.inRangeVehicle.index);
                     SoundUtil.playSample(self.sampleAttach, 1, 0, nil);
                 end
             end
