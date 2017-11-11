@@ -15,7 +15,14 @@
 
 
   <Materials>
-    <Material name="lambert1" materialId="6" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
+    <Material name="strips" materialId="9" ambientColor="1 1 1" cosPower="50" specularColor="1 1 1" customShaderId="6" customShaderVariation="colorMask">
+      <Texture fileId="2"/>
+      <Normalmap fileId="3"/>
+      <Glossmap fileId="4"/>
+      <Reflectionmap fileId="5" lodDistanceScaling="0.5" viewDistanceScaling="0.5" type="cube" scaling="1" refractiveIndex="1" bumpScale="0.5" shapesObjectMask="4294967295" lightsObjectMask="4294967295"/>
+      <CustomParameter name="RDT" value="0 0 20 20"/>
+      <CustomParameter name="RDTColor" value="0.09 0.08 0.04 0"/>
+      <CustomParameter name="colorScale" value="1 0 0 1"/>
     </Material>
     <Material name="barra1" materialId="8" ambientColor="1 1 1" cosPower="50" specularColor="1 1 1" customShaderId="6">
       <Texture fileId="2"/>
@@ -25,14 +32,7 @@
       <CustomParameter name="RDT" value="0 0 20 20"/>
       <CustomParameter name="RDTColor" value="0.09 0.08 0.04 0"/>
     </Material>
-    <Material name="strips" materialId="9" ambientColor="1 1 1" cosPower="50" specularColor="1 1 1" customShaderId="6" customShaderVariation="colorMask">
-      <Texture fileId="2"/>
-      <Normalmap fileId="3"/>
-      <Glossmap fileId="4"/>
-      <Reflectionmap fileId="5" lodDistanceScaling="0.5" viewDistanceScaling="0.5" type="cube" scaling="1" refractiveIndex="1" bumpScale="0.5" shapesObjectMask="4294967295" lightsObjectMask="4294967295"/>
-      <CustomParameter name="RDT" value="0 0 20 20"/>
-      <CustomParameter name="RDTColor" value="0.09 0.08 0.04 0"/>
-      <CustomParameter name="colorScale" value="1 0 0 1"/>
+    <Material name="lambert1" materialId="6" diffuseColor="0.494118 0.494118 0.494118 1" ambientColor="1 1 1">
     </Material>
   </Materials>
 
@@ -45,7 +45,7 @@
   </Dynamics>
 
   <Scene>
-    <Shape shapeId="1" name="towbar" scale="0.9 0.9 0.9" dynamic="true" compound="true" collisionMask="2105410" clipDistance="300" nodeId="17" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true">
+    <Shape shapeId="1" name="towbar" scale="0.9 0.9 0.9" dynamic="true" compound="true" collisionMask="2105410" staticFriction="1" dynamicFriction="1" linearDamping="0.01" density="49.95" clipDistance="300" nodeId="17" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true">
       <Shape shapeId="2" name="bar" scale="0.7 0.7 0.7" nodeId="18" materialIds="8" castsShadows="true" receiveShadows="true">
         <Shape shapeId="3" name="backAttach" translation="0 0 -1.638" scale="0.8 0.7 0.7" nodeId="19" materialIds="8" castsShadows="true" receiveShadows="true">
           <TransformGroup name="pullJoint" rotation="0 -90 0" nodeId="20"/>
@@ -54,7 +54,7 @@
           <TransformGroup name="inputJoint" rotation="0 90 0" nodeId="22"/>
         </Shape>
         <TransformGroup name="collision" nodeId="23">
-          <Shape shapeId="5" name="collision" compoundChild="true" collisionMask="2105410" density="0.001" clipDistance="0" nodeId="24" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true"/>
+          <Shape shapeId="5" name="collision" compoundChild="true" collisionMask="8194" staticFriction="1" dynamicFriction="1" linearDamping="0.01" density="0.001" clipDistance="0" nodeId="24" materialIds="6" castsShadows="true" receiveShadows="true" nonRenderable="true"/>
         </TransformGroup>
         <TransformGroup name="design" nodeId="25">
           <TransformGroup name="designFront" nodeId="26">
@@ -62,8 +62,8 @@
             <Shape shapeId="6" name="backStrips" translation="0 0 -0.23" scale="1.02 1.02 0.5" nodeId="28" materialIds="9" castsShadows="true" receiveShadows="true"/>
           </TransformGroup>
           <TransformGroup name="designFrontSlim" visibility="false" nodeId="29">
-            <Shape shapeId="6" name="backStrips" translation="0 0 -0.324218" scale="1.02 1.02 0.4" nodeId="41" materialIds="9" castsShadows="true" receiveShadows="true"/>
-            <Shape shapeId="6" name="frontStrips" translation="0 0 0.745623" scale="1.02 1.02 0.4" nodeId="42" materialIds="9" castsShadows="true" receiveShadows="true"/>
+            <Shape shapeId="6" name="backStrips" translation="0 0 -0.324218" scale="1.02 1.02 0.4" nodeId="30" materialIds="9" castsShadows="true" receiveShadows="true"/>
+            <Shape shapeId="6" name="frontStrips" translation="0 0 0.745623" scale="1.02 1.02 0.4" nodeId="31" materialIds="9" castsShadows="true" receiveShadows="true"/>
           </TransformGroup>
           <TransformGroup name="designMiddle" visibility="false" nodeId="32">
             <Shape shapeId="6" name="backStrips" translation="0 0 -0.4" scale="1.02 1.02 0.3" nodeId="33" materialIds="9" castsShadows="true" receiveShadows="true"/>

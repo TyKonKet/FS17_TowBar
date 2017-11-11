@@ -160,6 +160,8 @@ function Puller:onAttachObject(object, jointId, noEventSend)
             constr:setTranslationLimit(i - 1, true, 0, 0);
             constr:setRotationLimit(i - 1, -0.35, 0.35);
             constr:setEnableCollision(false);
+            --constr:setTranslationLimitSpring(-1, 1000, -1, 1000, -1, 1000);
+            --constr:setTranslationLimitForceLimit(-1, -1, -1);
         end
         self.joint.index = constr:finalize();
         if not object.isControlled and object.motor ~= nil and object.wheels ~= nil then
@@ -217,9 +219,15 @@ function Player:pickUpObjectRaycastCallback(hitObjectId, x, y, z, distance)
         if hitObjectId ~= g_currentMission.terrainDetailId and Player.PICKED_UP_OBJECTS[hitObjectId] ~= true then
             if getRigidBodyType(hitObjectId) == "Dynamic" then
                 local object = g_currentMission:getNodeObject(hitObjectId);
-                if (object ~= nil and object.dynamicMountObject == nil) or g_currentMission.nodeToVehicle[hitObjectId] == nil or (g_currentMission.nodeToVehicle[hitObjectId].canBeGrabbed ~= nil and g_currentMission.nodeToVehicle[hitObjectId]:canBeGrabbed()) then
+                if (object ~= nil and object.dynamicMountObject == nil) or g_currentMission.nodeToVehicle[hitObjectId] == nil then
                     self.lastFoundObject = hitObjectId;
                     self.lastFoundObjectMass = getMass(hitObjectId);
+                    self.lastFoundObjectHitPoint = {x, y, z};
+                    return false;
+                end
+                if g_currentMission.nodeToVehicle[hitObjectId].canBeGrabbed ~= nil and g_currentMission.nodeToVehicle[hitObjectId]:canBeGrabbed() then
+                    self.lastFoundObject = hitObjectId;
+                    self.lastFoundObjectMass = Player.MAX_PICKABLE_OBJECT_MASS * 0.9;
                     self.lastFoundObjectHitPoint = {x, y, z};
                     return false;
                 end
@@ -227,4 +235,21 @@ function Player:pickUpObjectRaycastCallback(hitObjectId, x, y, z, distance)
         end
     end
     return true;
+end
+
+function Player:throwObject()
+    if self.pickedUpObject ~= nil and self.pickedUpObjectJointId ~= nil then
+        self:pickUpObject(false);
+        local dx,dy,dz = localDirectionToWorld(self.cameraNode, 0,0,-1);
+        local mass = getMass(self.pickedUpObject);
+        local v = 8.0 * (1.1 - math.min(1, mass / Player.MAX_PICKABLE_OBJECT_MASS));
+        local vx = dx * v;
+        local vy = dy * v;
+        local vz = dz * v;
+        setLinearVelocity(self.pickedUpObject, vx,vy,vz);
+        local object = g_currentMission:getNodeObject(self.pickedUpObject);
+        if object ~= nil then
+            object.thrownFromPosition = {getWorldTranslation(g_currentMission.player.rootNode)};
+        end
+    end
 end
