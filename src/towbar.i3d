@@ -7,7 +7,7 @@
 
   <Files>
     <File fileId="6" filename="shaders/vehicleShader.xml" relativePath="true"/>
-    <File fileId="5" filename="textures/rough_cube.dds" relativePath="true"/>
+    <File fileId="5" filename="shared/rough_cube.dds" relativePath="true"/>
     <File fileId="2" filename="textures/towbar_diffuse.dds" relativePath="true"/>
     <File fileId="3" filename="textures/towbar_normal.dds" relativePath="true"/>
     <File fileId="4" filename="textures/towbar_specular.dds" relativePath="true"/>
