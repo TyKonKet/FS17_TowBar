@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<modDesc descVersion="37">
+<modDesc descVersion="38">
     <author>Peppe978, TyKonKet</author>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <title>
         <en>Tow Bar</en>
-        <it>Barra Traino</it>
         <de>Abschleppstange</de>
         <fr>Barre de remorquage</fr>
-        <nl>Trekstang</nl>
-        <pl>Sztywny Hol</pl>
     </title>
     <description>
         <en>
@@ -50,30 +47,6 @@ Changelog 1.1.0
 - Couleur personnalisable dans le magasin
             ]]>
         </fr>
-        <nl>
-            <![CDATA[Je kunt voertuigen trekken met deze trekstang.
-
-Gebruik je handen om de trekstang in de juiste positie te brengen.
-Koppel het groene einde aan de tractor met de knop Q.
-Rij naar het gewenste voertuig welke getrokken moet worden en druk X om aan te koppelen.
-]]>
-        </nl>
-        <it>
-            <![CDATA[Con la Barra Traino puoi trainare i veicoli.]]>
-        </it>
-        <pl>
-            <![CDATA[Sztywny hol pozwala holować pojazdy.
-
-Hol można przenieść na miejsce w rękach.
-Zielony koniec zaczepia się do traktora za pomocą klawisza Q.
-Należy podjechać pod traktor, który ma być holowany i zaczepić go za pomocą X.
-
-Dziennik zmian w wersji 1.1.0
-- Poprawione tektury
-- Wybór wzoru w sklepie
-- Wybór koloru w sklepie
-]]>
-        </pl>
     </description>
     <iconFilename>icon.dds</iconFilename>
     <multiplayer supported="true"/>
@@ -115,8 +88,4 @@ Dziennik zmian w wersji 1.1.0
     <brands>
         <brand name="COMEAR" title="Comear" image="brand_COMEAR.dds"/>
     </brands>
-    <translatedBy>
-        <nl>FarmingvidsHD</nl>
-        <pl>Dzi4d3k</pl>
-    </translatedBy>
 </modDesc>
