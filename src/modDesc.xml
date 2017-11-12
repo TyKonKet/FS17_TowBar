@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="38">
     <author>Peppe978, TyKonKet</author>
-    <version>1.2.0</version>
+    <version>1.2.0.0</version>
     <title>
         <en>Tow Bar</en>
         <de>Abschleppstange</de>
@@ -15,10 +15,11 @@ Use your hands to bring the tow bar in place.
 Attach the green end to the tractor with button Q.
 Drive to the desired tractor which needs to be towed and press X to attach it.
 
-Changelog 1.1.0
-- Improved textures
-- Design customizable in shop
-- Color customizable in shop
+Changelog 1.2.0.0
+- Fixed format of some images
+- Fixed "elasticity" of joints
+- Added saving and loading of attached vehicle
+- Improved physics of towbar
 ]]>
         </en>
         <de>
@@ -28,10 +29,11 @@ Mit der Hand kann die Stange getragen werden.
 Mit der grünen Seite am Zugfahrzeug per Taste Q die Abschleppstange anhängen.
 Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X befestigen.
 
-Changelog 1.1.0
-- Verbesserte Texturen
-- Design anpassbar im Shop
-- Farbe kundengerecht im Geschäft
+Changelog 1.2.0.0
+- Festes Format einiger Bilder
+- Fixierte "Elastizität" von Gelenken
+- Zusätzliches Speichern und Laden des angehängten Fahrzeugs
+- Verbesserte Physik der Anhängerkupplung
 ]]>
         </de>
         <fr>
@@ -41,10 +43,11 @@ Utilisez vos mains pour mettre la barre de remorquage en place.
 Fixez l'extrémité verte au tracteur avec le bouton Q.
 Dirigez-vous vers le tracteur souhaité qui doit être remorqué et appuyez sur X pour l'attacher.
 
-Changelog 1.1.0
-- Amélioration des textures
-- Design personnalisable dans le magasin
-- Couleur personnalisable dans le magasin
+Changelog 1.2.0.0
+- Fixe format de certaines images
+- Fixe "élasticité" des articulations
+- Ajout de la sauvegarde et du chargement du véhicule attaché
+- Amélioration de la physique de l'attelage
             ]]>
         </fr>
     </description>
