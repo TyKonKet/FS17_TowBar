@@ -36,7 +36,7 @@ function Puller:getAttachmentsSaveNodes(superFunc, nodeIdent, vehiclesToId)
     if id ~= nil and self.joint ~= nil then
         local object = self.joint.object;
         if object ~= nil and vehiclesToId[object] ~= nil and self.joint.attacherJointId ~= nil then
-            nodes = nodes .. nodeIdent .. '<attachment id0="' .. id .. '" id1="' .. vehiclesToId[object] .. '" jointId="' .. self.joint.attacherJointId .. '" type="towbar" />\n';            
+            nodes = nodes .. nodeIdent .. '<attachment id0="' .. id .. '" id1="' .. vehiclesToId[object] .. '" jointId="' .. self.joint.attacherJointId .. '" type="towbar" />\n';
         end
     end
     return nodes;
@@ -142,7 +142,6 @@ end
 
 function Puller:onAttachObject(object, jointId, noEventSend)
     PullerAttachEvent.sendEvent(self, object, jointId, noEventSend);
-    self.joint.object = object;
     if object.isBroken == true then
         object.isBroken = false;
     end
@@ -160,8 +159,8 @@ function Puller:onAttachObject(object, jointId, noEventSend)
             constr:setTranslationLimit(i - 1, true, 0, 0);
             constr:setRotationLimit(i - 1, -0.35, 0.35);
             constr:setEnableCollision(false);
-            --constr:setTranslationLimitSpring(-1, 1000, -1, 1000, -1, 1000);
-            --constr:setTranslationLimitForceLimit(-1, -1, -1);
+        --constr:setTranslationLimitSpring(-1, 1000, -1, 1000, -1, 1000);
+        --constr:setTranslationLimitForceLimit(-1, -1, -1);
         end
         self.joint.index = constr:finalize();
         if not object.isControlled and object.motor ~= nil and object.wheels ~= nil then
@@ -170,8 +169,13 @@ function Puller:onAttachObject(object, jointId, noEventSend)
             end
         end
         self.joint.attacherJointId = jointId;
+        if object.leaveVehicle ~= nil then
+            object.backupLeaveVehicle = object.leaveVehicle;
+            object.leaveVehicle = Utils.overwrittenFunction(object.leaveVehicle, Puller.leaveVehicle);
+        end
     end
     object.forceIsActive = true;
+    self.joint.object = object;
     self.isAttached = true;
     self.inRangeVehicle = nil;
 end
@@ -179,10 +183,14 @@ end
 function Puller:onDetachObject(noEventSend)
     PullerDetachEvent.sendEvent(self, noEventSend);
     if self.isServer then
+        if self.joint.object.leaveVehicle ~= nil and self.joint.object.backupLeaveVehicle ~= nil then
+            self.joint.object.leaveVehicle = self.joint.object.backupLeaveVehicle;
+            self.joint.object.backupLeaveVehicle = nil;
+        end
         removeJoint(self.joint.index);
         if not self.joint.object.isControlled and self.joint.object.motor ~= nil and self.joint.object.wheels ~= nil then
             for k, wheel in pairs(self.joint.object.wheels) do
-                setWheelShapeProps(wheel.node, wheel.wheelShape, 0, self.joint.object.motor.brakeForce, 0, wheel.rotationDamping);
+                setWheelShapeProps(wheel.node, wheel.wheelShape, 0, self.joint.object.motor:getBrakeForce() * wheel.brakeFactor, 0, wheel.rotationDamping);
             end
         end
     end
@@ -240,16 +248,25 @@ end
 function Player:throwObject()
     if self.pickedUpObject ~= nil and self.pickedUpObjectJointId ~= nil then
         self:pickUpObject(false);
-        local dx,dy,dz = localDirectionToWorld(self.cameraNode, 0,0,-1);
+        local dx, dy, dz = localDirectionToWorld(self.cameraNode, 0, 0, -1);
         local mass = getMass(self.pickedUpObject);
         local v = 8.0 * (1.1 - math.min(1, mass / Player.MAX_PICKABLE_OBJECT_MASS));
         local vx = dx * v;
         local vy = dy * v;
         local vz = dz * v;
-        setLinearVelocity(self.pickedUpObject, vx,vy,vz);
+        setLinearVelocity(self.pickedUpObject, vx, vy, vz);
         local object = g_currentMission:getNodeObject(self.pickedUpObject);
         if object ~= nil then
             object.thrownFromPosition = {getWorldTranslation(g_currentMission.player.rootNode)};
+        end
+    end
+end
+
+function Puller:leaveVehicle(superFunc)
+    superFunc(self);
+    if self.motor ~= nil and self.wheels ~= nil then
+        for k, wheel in pairs(self.wheels) do
+            setWheelShapeProps(wheel.node, wheel.wheelShape, 0, 0, 0, wheel.rotationDamping);
         end
     end
 end

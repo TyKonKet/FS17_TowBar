@@ -57,7 +57,7 @@ Changelog 1.2.0.0
         <text name="PULLER_DETACH">
             <en>Detach object</en>
             <it>Sgancia oggetto</it>
-            <de>Objekt löschen</de>
+            <de>Fahrzeug abhängen</de>
             <fr>Détacher l'objet</fr>
             <nl>Ontkoppel voorwerp</nl>
             <pl>Odczep obiekt</pl>
@@ -65,7 +65,7 @@ Changelog 1.2.0.0
         <text name="PULLER_ATTACH">
             <en>Attach object</en>
             <it>Aggancia oggetto</it>
-            <de>Objekt anbringen</de>
+            <de>Fahrzeug ankuppeln</de>
             <fr>Joindre l'objet</fr>
             <nl>Koppel voorwerp</nl>
             <pl>Zaczep obiekt</pl>
