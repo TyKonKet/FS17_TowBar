@@ -216,7 +216,7 @@ function Puller:canBeGrabbed()
                 return true;
             end
         else
-            return true
+            return true;
         end
     end
     return false;
@@ -258,6 +258,91 @@ function Player:throwObject()
         local object = g_currentMission:getNodeObject(self.pickedUpObject);
         if object ~= nil then
             object.thrownFromPosition = {getWorldTranslation(g_currentMission.player.rootNode)};
+        end
+    end
+end
+
+function Player:pickUpObject(state, noEventSend)
+    if self.isServer then
+        if state and (self.isObjectInRange and self.lastFoundObject ~= nil) and not self.isCarryingObject then
+            local constr = JointConstructor:new();
+            constr:setActors(self.pickUpKinematicHelper.node, self.lastFoundObject);
+            constr:setJointTransforms(self.pickUpKinematicHelper.node, self.lastFoundObject);
+            
+            for i = 0, 2 do
+                constr:setRotationLimit(i, 0, 0);
+                constr:setTranslationLimit(i, true, 0, 0);
+            end
+            
+            local wx = self.lastFoundObjectHitPoint[1];
+            local wy = self.lastFoundObjectHitPoint[2];
+            local wz = self.lastFoundObjectHitPoint[3];
+            constr:setJointWorldPositions(wx, wy, wz, wx, wy, wz);
+            
+            local nx, ny, nz = localDirectionToWorld(self.lastFoundObject, 1, 0, 0);
+            constr:setJointWorldAxes(nx, ny, nz, nx, ny, nz);
+            
+            local yx, yy, yz = localDirectionToWorld(self.lastFoundObject, 0, 1, 0);
+            constr:setJointWorldNormals(yx, yy, yz, yx, yy, yz);
+            
+            constr:setEnableCollision(false);
+            
+            local dampingRatio = 1.0;
+            local mass = getMass(self.lastFoundObject) * 100;
+            if getMass(self.lastFoundObject) > Player.MAX_PICKABLE_OBJECT_MASS * 0.9 then
+                mass = getMass(self.lastFoundObject) * 0.4 * 100;
+            else
+                mass = getMass(self.lastFoundObject) * 100;
+            end
+            
+            local rotationLimitSpring = {};
+            local rotationLimitDamper = {};
+            for i = 1, 3 do
+                rotationLimitSpring[i] = mass * 60;
+                rotationLimitDamper[i] = dampingRatio * 2 * math.sqrt(mass * rotationLimitSpring[i]);
+            end
+            constr:setRotationLimitSpring(rotationLimitSpring[1], rotationLimitDamper[1], rotationLimitSpring[2], rotationLimitDamper[2], rotationLimitSpring[3], rotationLimitDamper[3]);
+            
+            local translationLimitSpring = {};
+            local translationLimitDamper = {};
+            for i = 1, 3 do
+                translationLimitSpring[i] = mass * 60;
+                translationLimitDamper[i] = dampingRatio * 2 * math.sqrt(mass * translationLimitSpring[i]);
+            end
+            constr:setTranslationLimitSpring(translationLimitSpring[1], translationLimitDamper[1], translationLimitSpring[2], translationLimitDamper[2], translationLimitSpring[3], translationLimitDamper[3]);
+            
+            local forceAcceleration = 4;
+            local forceLimit = forceAcceleration * mass;
+            constr:setBreakable(forceLimit, forceLimit);
+            self.pickedUpObjectJointId = constr:finalize();
+            addJointBreakReport(self.pickedUpObjectJointId, "onPickedUpObjectJointBreak", self);
+            
+            self.pickedUpObject = self.lastFoundObject;
+            self.isCarryingObject = true;
+            Player.PICKED_UP_OBJECTS[self.pickedUpObject] = true;
+            local object = g_currentMission:getNodeObject(self.pickedUpObject);
+            if object ~= nil then
+                object.thrownFromPosition = nil;
+            end
+        else
+            if self.pickedUpObjectJointId ~= nil then
+                removeJoint(self.pickedUpObjectJointId);
+                self.pickedUpObjectJointId = nil;
+                self.isCarryingObject = false;
+                Player.PICKED_UP_OBJECTS[self.pickedUpObject] = false;
+                
+                if entityExists(self.pickedUpObject) then
+                    local vx, vy, vz = getLinearVelocity(self.pickedUpObject)
+                    vx = Utils.clamp(vx, -5, 5)
+                    vy = Utils.clamp(vy, -5, 5)
+                    vz = Utils.clamp(vz, -5, 5)
+                    setLinearVelocity(self.pickedUpObject, vx, vy, vz);
+                end
+                local object = g_currentMission:getNodeObject(self.pickedUpObject);
+                if object ~= nil then
+                    object.thrownFromPosition = nil;
+                end
+            end
         end
     end
 end

@@ -21,7 +21,7 @@
     <filename>towbar.i3d</filename>
     <size width="5" length="3" lengthOffset="0" />
     <attachSound file="$data/sounds/attach.wav" pitchOffset="1.0" volume="1.0" indoorVolumeFactor="0.35" indoorLowpassGain="0.75" />
-    <grabbable isGrabbable="true" isGrabbableOnlyIfDetach="false" />
+    <grabbable isGrabbable="true" isGrabbableOnlyIfDetach="true" />
     <puller index="0>0|0|0" rootNode="0>" attachRadius="1.5" />
     <inputAttacherJoints>
         <inputAttacherJoint index="0>0|1|0" jointType="trailer" upperRotLimitScale="1 0.35 1" lowerRotLimitScale="1 0.35 1" />
