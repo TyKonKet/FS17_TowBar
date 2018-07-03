@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<modDesc descVersion="38">
-    <author>Peppe978, TyKonKet</author>
-    <version>1.2.0.0</version>
+<modDesc descVersion="39">
+    <author>{package_author}</author>
+    <version>{package_version}</version>
     <title>
         <en>Tow Bar</en>
         <de>Abschleppstange</de>
@@ -9,45 +9,48 @@
     </title>
     <description>
         <en>
-            <![CDATA[You can pull vehicles with this tow bar.
+            <![CDATA[
+            You can pull vehicles with this tow bar.
 
-Use your hands to bring the tow bar in place.
-Attach the green end to the tractor with button Q.
-Drive to the desired tractor which needs to be towed and press X to attach it.
+            Use your hands to bring the tow bar in place.
+            Attach the green end to the tractor with button Q.
+            Drive to the desired tractor which needs to be towed and press X to attach it.
 
-Changelog 1.2.0.0
-- Fixed format of some images
-- Fixed "elasticity" of joints
-- Added saving and loading of attached vehicle
-- Improved physics of towbar
-]]>
+            Changelog {package_version}
+            - Fixed format of some images
+            - Fixed "elasticity" of joints
+            - Added saving and loading of attached vehicle
+            - Improved physics of towbar
+            ]]>
         </en>
         <de>
-            <![CDATA[Mit der Abschleppstange können Sie Fahrzeuge ziehen.
+            <![CDATA[
+            Mit der Abschleppstange können Sie Fahrzeuge ziehen.
 
-Mit der Hand kann die Stange getragen werden.
-Mit der grünen Seite am Zugfahrzeug per Taste Q die Abschleppstange anhängen.
-Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X befestigen.
+            Mit der Hand kann die Stange getragen werden.
+            Mit der grünen Seite am Zugfahrzeug per Taste Q die Abschleppstange anhängen.
+            Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X befestigen.
 
-Changelog 1.2.0.0
-- Festes Format einiger Bilder
-- Fixierte "Elastizität" von Gelenken
-- Zusätzliches Speichern und Laden des angehängten Fahrzeugs
-- Verbesserte Physik der Anhängerkupplung
-]]>
+            Changelog {package_version}
+            - Festes Format einiger Bilder
+            - Fixierte "Elastizität" von Gelenken
+            - Zusätzliches Speichern und Laden des angehängten Fahrzeugs
+            - Verbesserte Physik der Anhängerkupplung
+            ]]>
         </de>
         <fr>
-            <![CDATA[Avec la barre de remorquage, vous pouvez tirer des véhicules.
+            <![CDATA[
+            Avec la barre de remorquage, vous pouvez tirer des véhicules.
 
-Utilisez vos mains pour mettre la barre de remorquage en place.
-Fixez l'extrémité verte au tracteur avec le bouton Q.
-Dirigez-vous vers le tracteur souhaité qui doit être remorqué et appuyez sur X pour l'attacher.
+            Utilisez vos mains pour mettre la barre de remorquage en place.
+            Fixez l'extrémité verte au tracteur avec le bouton Q.
+            Dirigez-vous vers le tracteur souhaité qui doit être remorqué et appuyez sur X pour l'attacher.
 
-Changelog 1.2.0.0
-- Fixe format de certaines images
-- Fixe "élasticité" des articulations
-- Ajout de la sauvegarde et du chargement du véhicule attaché
-- Amélioration de la physique de l'attelage
+            Changelog {package_version}
+            - Fixe format de certaines images
+            - Fixe "élasticité" des articulations
+            - Ajout de la sauvegarde et du chargement du véhicule attaché
+            - Amélioration de la physique de l'attelage
             ]]>
         </fr>
     </description>
@@ -69,6 +72,15 @@ Changelog 1.2.0.0
             <fr>Joindre l'objet</fr>
             <nl>Koppel voorwerp</nl>
             <pl>Zaczep obiekt</pl>
+        </text>
+        <text name="input_PULLER_TOGGLE_THROTTLE">
+            <en>Toggle pulled vehicle throttle</en>
+        </text>
+        <text name="input_PULLER_ENABLE_THROTTLE">
+            <en>Enable pulled vehicle throttle</en>
+        </text>
+        <text name="input_PULLER_DISABLE_THROTTLE">
+            <en>Disable pulled vehicle throttle</en>
         </text>
     </l10n>
     <specializations>
