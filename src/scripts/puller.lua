@@ -111,7 +111,11 @@ function Puller:update(dt)
             if self.pulledVehicleThrottle then
                 if InputBinding.hasEvent(InputBinding.PULLER_TOGGLE_THROTTLE) then
                     self.pulledVehicleThrottle = false
-                    Puller.leaveVehicle(self.joint.object, self.joint.object.leaveVehicle)
+                    if self.joint.object.reverserDirection ~= nil then
+                        Puller.leaveVehicle(self.joint.object, self.joint.object.leaveVehicle)
+                    elseif self.joint.object.attacherVehicle.reverserDirection ~= nil then
+                        Puller.leaveVehicle(self.joint.object.attacherVehicle, self.joint.object.attacherVehicle.leaveVehicle)
+                    end
                 end
             else
                 if InputBinding.hasEvent(InputBinding.PULLER_TOGGLE_THROTTLE) then
@@ -121,7 +125,11 @@ function Puller:update(dt)
         end
     end
     if self.pulledVehicleThrottle then
-        Drivable.updateVehiclePhysics(self.joint.object, self.attacherVehicle.axisForward, self.attacherVehicle.axisForwardIsAnalog, self.attacherVehicle.axisSide, self.attacherVehicle.axisSideIsAnalog, self.attacherVehicle.doHandbrake, dt)
+        if self.joint.object.reverserDirection ~= nil then
+            Drivable.updateVehiclePhysics(self.joint.object, self.attacherVehicle.axisForward, self.attacherVehicle.axisForwardIsAnalog, self.attacherVehicle.axisSide, self.attacherVehicle.axisSideIsAnalog, self.attacherVehicle.doHandbrake, dt)
+        elseif self.joint.object.attacherVehicle.reverserDirection ~= nil then
+            Drivable.updateVehiclePhysics(self.joint.object.attacherVehicle, self.attacherVehicle.axisForward, self.attacherVehicle.axisForwardIsAnalog, self.attacherVehicle.axisSide, self.attacherVehicle.axisSideIsAnalog, self.attacherVehicle.doHandbrake, dt)
+        end
     end
 end
 
@@ -182,15 +190,18 @@ function Puller:onAttachObject(object, jointId, noEventSend)
             constr:setEnableCollision(false)
         end
         self.joint.index = constr:finalize()
-        if not object.isControlled and object.motor ~= nil and object.wheels ~= nil then
-            for k, wheel in pairs(object.wheels) do
-                setWheelShapeProps(wheel.node, wheel.wheelShape, 0, 0, 0, wheel.rotationDamping)
-            end
+        if object.reverserDirection ~= nil then
+            Puller.leaveVehicle(object, object.leaveVehicle)
+        elseif object.attacherVehicle.reverserDirection ~= nil then
+            Puller.leaveVehicle(object.attacherVehicle, object.attacherVehicle.leaveVehicle)
         end
         self.joint.attacherJointId = jointId
         if object.leaveVehicle ~= nil then
             object.backupLeaveVehicle = object.leaveVehicle
             object.leaveVehicle = Utils.overwrittenFunction(object.leaveVehicle, Puller.leaveVehicle)
+        elseif object.attacherVehicle.leaveVehicle ~= nil then
+            object.attacherVehicle.backupLeaveVehicle = object.attacherVehicle.leaveVehicle
+            object.attacherVehicle.leaveVehicle = Utils.overwrittenFunction(object.attacherVehicle.leaveVehicle, Puller.leaveVehicle)
         end
     end
     object.forceIsActive = true
@@ -205,6 +216,9 @@ function Puller:onDetachObject(noEventSend)
         if self.joint.object.leaveVehicle ~= nil and self.joint.object.backupLeaveVehicle ~= nil then
             self.joint.object.leaveVehicle = self.joint.object.backupLeaveVehicle
             self.joint.object.backupLeaveVehicle = nil
+        elseif self.joint.object.attacherVehicle.leaveVehicle ~= nil and self.joint.object.attacherVehicle.backupLeaveVehicle ~= nil then
+            self.joint.object.attacherVehicle.leaveVehicle = self.joint.object.attacherVehicle.backupLeaveVehicle
+            self.joint.object.attacherVehicle.backupLeaveVehicle = nil
         end
         removeJoint(self.joint.index)
         if not self.joint.object.isControlled and self.joint.object.motor ~= nil and self.joint.object.wheels ~= nil then
@@ -378,7 +392,7 @@ function Puller:leaveVehicle(superFunc)
     if superFunc ~= nil then
         superFunc(self)
     end
-    if self.motor ~= nil and self.wheels ~= nil then
+    if not self.isControlled and self.motor ~= nil and self.wheels ~= nil then
         for k, wheel in pairs(self.wheels) do
             setWheelShapeProps(wheel.node, wheel.wheelShape, 0, 0, 0, wheel.rotationDamping)
         end
