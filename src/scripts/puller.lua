@@ -13,6 +13,7 @@ end
 function Puller:preLoad(savegame)
     self.getAttachmentsSaveNodes = Utils.overwrittenFunction(self.getAttachmentsSaveNodes, Puller.getAttachmentsSaveNodes)
     self.loadAttachmentFromNodes = Utils.overwrittenFunction(self.loadAttachmentFromNodes, Puller.loadAttachmentFromNodes)
+    self.isDetachAllowed = Utils.overwrittenFunction(self.isDetachAllowed, Puller.isDetachAllowed)
     self.canBeGrabbed = Puller.canBeGrabbed
     self.getIsTurnedOn = Puller.getIsTurnedOn
     self.pulledVehicleThrottle = false
@@ -102,7 +103,8 @@ function Puller:update(dt)
                         Puller.onDetachObject(self)
                         SoundUtil.playSample(self.sampleAttach, 1, 0, nil)
                     else
-                        g_currentMission:showBlinkingWarning(g_i18n:getText("PULLER_DISABLE_THROTTLE_WARNING"), 2000)
+                        --g_currentMission:showBlinkingWarning(g_i18n:getText("PULLER_DISABLE_THROTTLE_WARNING"), 2000)
+                        self.showDetachingNotAllowedTime = 2000;
                     end
                 end
             end
@@ -113,7 +115,7 @@ function Puller:update(dt)
                     self.pulledVehicleThrottle = false
                     if self.joint.object.reverserDirection ~= nil then
                         Puller.leaveVehicle(self.joint.object, self.joint.object.leaveVehicle)
-                    elseif self.joint.object.attacherVehicle.reverserDirection ~= nil then
+                    elseif self.joint.object.attacherVehicle ~= nil and self.joint.object.attacherVehicle.reverserDirection ~= nil then
                         Puller.leaveVehicle(self.joint.object.attacherVehicle, self.joint.object.attacherVehicle.leaveVehicle)
                     end
                 end
@@ -127,7 +129,7 @@ function Puller:update(dt)
     if self.pulledVehicleThrottle then
         if self.joint.object.reverserDirection ~= nil then
             Drivable.updateVehiclePhysics(self.joint.object, self.attacherVehicle.axisForward, self.attacherVehicle.axisForwardIsAnalog, self.attacherVehicle.axisSide, self.attacherVehicle.axisSideIsAnalog, self.attacherVehicle.doHandbrake, dt)
-        elseif self.joint.object.attacherVehicle.reverserDirection ~= nil then
+        elseif self.joint.object.attacherVehicle ~= nil and self.joint.object.attacherVehicle.reverserDirection ~= nil then
             Drivable.updateVehiclePhysics(self.joint.object.attacherVehicle, self.attacherVehicle.axisForward, self.attacherVehicle.axisForwardIsAnalog, self.attacherVehicle.axisSide, self.attacherVehicle.axisSideIsAnalog, self.attacherVehicle.doHandbrake, dt)
         end
     end
@@ -192,14 +194,14 @@ function Puller:onAttachObject(object, jointId, noEventSend)
         self.joint.index = constr:finalize()
         if object.reverserDirection ~= nil then
             Puller.leaveVehicle(object, object.leaveVehicle)
-        elseif object.attacherVehicle.reverserDirection ~= nil then
+        elseif object.attacherVehicle ~= nil and object.attacherVehicle.reverserDirection ~= nil then
             Puller.leaveVehicle(object.attacherVehicle, object.attacherVehicle.leaveVehicle)
         end
         self.joint.attacherJointId = jointId
         if object.leaveVehicle ~= nil then
             object.backupLeaveVehicle = object.leaveVehicle
             object.leaveVehicle = Utils.overwrittenFunction(object.leaveVehicle, Puller.leaveVehicle)
-        elseif object.attacherVehicle.leaveVehicle ~= nil then
+        elseif object.attacherVehicle ~= nil and object.attacherVehicle.leaveVehicle ~= nil then
             object.attacherVehicle.backupLeaveVehicle = object.attacherVehicle.leaveVehicle
             object.attacherVehicle.leaveVehicle = Utils.overwrittenFunction(object.attacherVehicle.leaveVehicle, Puller.leaveVehicle)
         end
@@ -401,4 +403,18 @@ end
 
 function Puller:getIsTurnedOn()
     return self.pulledVehicleThrottle
+end
+
+function Puller:isDetachAllowed()
+    return self.pulledVehicleThrottle
+end
+
+function Puller:isDetachAllowed(superFunc)
+    if superFunc ~= nil then
+        if not superFunc(self) then
+            return false
+        end
+    end
+
+    return not self.pulledVehicleThrottle
 end
