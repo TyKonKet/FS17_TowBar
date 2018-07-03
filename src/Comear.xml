@@ -26,11 +26,6 @@
     <inputAttacherJoints>
         <inputAttacherJoint index="0>0|1|0" jointType="trailer" upperRotLimitScale="1 0.35 1" lowerRotLimitScale="1 0.35 1" />
     </inputAttacherJoints>
-    <!--<lengthConfigurations>
-        <lengthConfiguration name="Short" price="0" />
-        <lengthConfiguration name="Medium" price="200" scaleNode="0>0" scale=""/>
-        <lengthConfiguration name="Long" price="500" scaleNode="0>0" scale=""/>
-    </lengthConfigurations>-->
     <designConfigurations>
         <designConfiguration name="$l10n_configuration_valueDefault" price="0">
             <objectChange node="0>0|3|0" visibilityActive="true" visibilityInactive="false"/>
@@ -82,5 +77,5 @@
     <components count="1">
         <component1 centerOfMass="0 0 0" solverIterationCount="10" />
     </components>
-    <schemaOverlay file="$dataS2/menu/schemas/implementSchema.png" fileSelected="$dataS2/menu/schemas/implementSchemaSelected.png" width="0.5" height="0.5" attacherJointPosition="0 0" />
+    <schemaOverlay file="$dataS2/menu/schemas/implementSchema.png" fileSelected="$dataS2/menu/schemas/implementSchemaSelected.png" fileTurnedOn="$dataS2/menu/schemas/implementSchemaTurnedOn.png" fileSelectedTurnedOn="$dataS2/menu/schemas/implementSchemaSelectedTurnedOn.png" width="0.5" height="0.5" attacherJointPosition="0 0"/>
 </vehicle>

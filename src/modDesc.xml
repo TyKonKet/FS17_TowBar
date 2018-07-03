@@ -17,10 +17,7 @@
             Drive to the desired tractor which needs to be towed and press X to attach it.
 
             Changelog {package_version}
-            - Fixed format of some images
-            - Fixed "elasticity" of joints
-            - Added saving and loading of attached vehicle
-            - Improved physics of towbar
+            - New feature to synchronize vehicles acceleration
             ]]>
         </en>
         <de>
@@ -32,10 +29,7 @@
             Mit dem Zugfahrzeug an das zu ziehende Fahrzeug heranfahren und mit der Taste X befestigen.
 
             Changelog {package_version}
-            - Festes Format einiger Bilder
-            - Fixierte "Elastizität" von Gelenken
-            - Zusätzliches Speichern und Laden des angehängten Fahrzeugs
-            - Verbesserte Physik der Anhängerkupplung
+            - Neue Funktion zum Synchronisieren der Fahrzeugbeschleunigung
             ]]>
         </de>
         <fr>
@@ -47,10 +41,7 @@
             Dirigez-vous vers le tracteur souhaité qui doit être remorqué et appuyez sur X pour l'attacher.
 
             Changelog {package_version}
-            - Fixe format de certaines images
-            - Fixe "élasticité" des articulations
-            - Ajout de la sauvegarde et du chargement du véhicule attaché
-            - Amélioration de la physique de l'attelage
+            - Nouvelle fonctionnalité pour synchroniser l'accélération des véhicules
             ]]>
         </fr>
     </description>
@@ -76,16 +67,21 @@
         <text name="input_PULLER_TOGGLE_THROTTLE">
             <en>Toggle pulled vehicle throttle</en>
         </text>
-        <text name="input_PULLER_ENABLE_THROTTLE">
-            <en>Enable pulled vehicle throttle</en>
+        <text name="PULLER_ENABLE_THROTTLE">
+            <en>Turn on pulled vehicle throttle</en>
         </text>
-        <text name="input_PULLER_DISABLE_THROTTLE">
-            <en>Disable pulled vehicle throttle</en>
+        <text name="PULLER_DISABLE_THROTTLE">
+            <en>Turn off pulled vehicle throttle</en>
+        </text>
+        <text name="PULLER_DISABLE_THROTTLE_WARNING">
+            <en>Please turn off pulled vehicle throttle before detaching</en>
         </text>
     </l10n>
+    <inputBindings>
+        <input name="PULLER_TOGGLE_THROTTLE" category="VEHICLE" key1="KEY_b" device="1" visible="true" />
+    </inputBindings>
     <specializations>
         <specialization name="puller" className="Puller" filename="scripts/puller.lua"/>
-        <specialization name="configurable" className="Configurable" filename="scripts/configurable.lua"/>
     </specializations>
     <vehicleTypes>
         <type name="puller" className="Vehicle" filename="$dataS/scripts/vehicles/Vehicle.lua">
@@ -93,7 +89,6 @@
             <specialization name="lights" />
             <specialization name="attachable" />
             <specialization name="washable" />
-            <specialization name="configurable" />
             <specialization name="puller" />
         </type>
     </vehicleTypes>
