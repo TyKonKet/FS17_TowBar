@@ -104,7 +104,7 @@ function Puller:update(dt)
                         SoundUtil.playSample(self.sampleAttach, 1, 0, nil)
                     else
                         --g_currentMission:showBlinkingWarning(g_i18n:getText("PULLER_DISABLE_THROTTLE_WARNING"), 2000)
-                        self.showDetachingNotAllowedTime = 2000;
+                        self.showDetachingNotAllowedTime = 2000
                     end
                 end
             end
@@ -415,6 +415,5 @@ function Puller:isDetachAllowed(superFunc)
             return false
         end
     end
-
     return not self.pulledVehicleThrottle
 end
