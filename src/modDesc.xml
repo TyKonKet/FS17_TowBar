@@ -66,15 +66,15 @@
         </text>
         <text name="input_PULLER_TOGGLE_THROTTLE">
             <en>Toggle pulled vehicle throttle</en>
-            <pl>Przełączanie sterowania gazem w pojeździe ciągnionym</pl>
+            <pl>Przełączanie sterowania gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_ENABLE_THROTTLE">
             <en>Turn on pulled vehicle throttle</en>
-            <pl>Włącz sterowanie gazem w pojeździe ciągnionym</pl>
+            <pl>Włącz sterowanie gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_DISABLE_THROTTLE">
             <en>Turn off pulled vehicle throttle</en>
-            <pl>Wyłącz sterowanie gazem w pojeździe ciągnionym</pl>
+            <pl>Wyłącz sterowanie gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_DISABLE_THROTTLE_WARNING">
             <en>Please turn off pulled vehicle throttle before detaching</en>
