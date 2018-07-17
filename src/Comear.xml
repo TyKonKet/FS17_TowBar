@@ -6,9 +6,13 @@
             <en>Tow Bar</en>
             <it>Barra Traino</it>
             <de>Abschleppstange</de>
+            <pl>Sztywny hol</pl>
         </name>
         <functions>
-            <function>With the Tow Bar you can pull vehicles.</function>
+            <function>
+                <en>With the Tow Bar you can pull vehicles.</en>
+                <pl>Dzięki sztywnemu holowi możesz holować inne pojazdy.</pl>
+            </function>
         </functions>
         <image>store.dds</image>
         <price>1000</price>
