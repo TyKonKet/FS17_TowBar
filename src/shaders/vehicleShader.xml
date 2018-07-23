@@ -3,7 +3,6 @@
 <CustomShader version="3" classRequirement = "">
     <Parameters>
         <Parameter name="RDT"                     target="RDT"                      type="float4" group="base"                  defaultValue="1.0 1.0 20.0 20.0"     minValue = "0.0 0.0 0.0 0.0"          maxValue = "1.0 1.0 50.0 50.0"/>
-        <Parameter name="RDTColor"                target="RDTColor"                 type="float3" group="base"                  defaultValue="0.20 0.14 0.08"        minValue = "0.0 0.0 0.0"              maxValue = "5.0 5.0 5.0"/>
         <Parameter name="offsetUV"                target="offsetUV"                 type="float4" group="offsetUV"              defaultValue="0.0 0.0 0.0 0.0"       minValue = "-10.0 -10.0 -10.0 -10.0"  maxValue = "10.0 10.0 10.0 10.0"/>
         <Parameter name="uvCenterSize"            target="uvCenterSize"             type="float4" group="uvRotate"              defaultValue="0.5 0.5 1.0 1.0"       minValue = "-1.0 -1.0 0.0 0.0"        maxValue = "1.0 1.0 50.0 50.0"/>
         <Parameter name="uvScale"                 target="uvScale"                  type="float4" group="uvScale"               defaultValue="1.0 1.0 1.0 1.0"       minValue = "-10.0 -10.0 -10.0 -10.0"  maxValue = "10.0 10.0 10.0 10.0"/>
@@ -21,6 +20,9 @@
         <Parameter name="cv2"                     target="cv2"                      type="float4" group="catmull"               defaultValue="0 0 10 0"/>
         <Parameter name="cv3"                     target="cv3"                      type="float4" group="catmull"               defaultValue="-2 2 15 0"/>
         <Parameter name="lengthInvLength"         target="lengthInvLength"          type="float4" group="catmull"               defaultValue="10 0.1 0 0"/>
+        <Parameter name="uvHide"                  target="uvHide"                   type="float4" group="uvHide"                defaultValue="0.0 1.0 0.0 0.0"       minValue = "0.0 0.0 0.0 0.0"          maxValue = "1.0 1.0 1.0 1.0"/>        
+        <Parameter name="axisCompression"         target="axisCompression"          type="float4" group="jiggling"              defaultValue="1 0 0 5"/>
+        <Parameter name="amplFreq"                target="amplFreq"                 type="float4" group="jiggling"              defaultValue="1 1 0 0"/>
     </Parameters>
     <Textures>
         <Texture name="DirtNmap" defaultColorProfile="linearRGB" defaultFilename="../shared/dirt_normal.png"/>
@@ -36,6 +38,12 @@
 <![CDATA[
     // Enables UV scrolling
     #define UV_SCROLL       
+]]>
+        </Variation>
+        <Variation name="uvScrollHideBySecondUV" groups="base offsetUV uvHide">
+<![CDATA[
+    #define UV_SCROLL
+    #define HIDE_BY_SECOND_UV
 ]]>
         </Variation>
         <Variation name="uvRotate" groups="base offsetUV uvRotate">
@@ -130,6 +138,19 @@
     #define LOCAL_CATMULL_ROM
 ]]>
         </Variation>
+        <Variation name="jiggling" groups="base jiggling">
+<![CDATA[
+    // Enables jiggling effect
+    // requires: 
+    //      vertexColor.rgb  - jiggling (roatation) pivot (per vertex part)
+    //      vertexColor.a    - random value used to offset jiggling (makes unique movement per vertex part)
+    //
+    //      In.texCoords1.x  - controls intensity of jiggling  (used as 0..1 gradient)
+    //
+    #define MESH_JIGGLING
+    #define DISABLE_VERTEX_COLOR
+]]>
+        </Variation> 
     </Variations>
     <LodLevel startDistance = "0">
         <CodeInjections>
@@ -146,7 +167,6 @@
     RDT.z - Dirt Texture Tile
 */
     uniform float4 RDT;
-    uniform float4 RDTColor;
 #if defined( MESH_SCROLL )
 /*
     Assumption fisrt_circle.radius == second_circle.radius, see example file how to use it
@@ -163,6 +183,9 @@
     offsetUV.z  - rotate
 */
     uniform float4 offsetUV;
+#endif
+#if defined( HIDE_BY_SECOND_UV )
+    uniform float4 uvHide;
 #endif
 #if defined( UV_ROTATE )
 /*
@@ -244,6 +267,18 @@
     uniform float4 cv3;
     uniform float4 lengthInvLength;
 #endif
+#if defined( MESH_JIGGLING )
+/*
+    axisCompression.xyz - jiggle (rotation) around this axis
+    axisCompression.w   - compression value for vertexColors (vertex colors limited to 0..1)
+    amplFreq.x - amplitude of jiggling
+    amplFreq.y - frequency of jiggling
+    amplFreq.z - 0..1 amount of jiggling elements
+    amplFreq.w - time controlled by script
+*/
+    uniform float4 axisCompression;
+    uniform float4 amplFreq;
+#endif
 ]]>
             </CodeInjection>
             <CodeInjection position = "SAMPLERS">
@@ -280,7 +315,10 @@ sampler2D DirtNmap;
             <CodeInjection position="VS_OUTPUT">
 <![CDATA[
 #if defined( DECAL_RENDER )
-float2 glossMapTexCoords2 : TEXCOORDn;
+    float2 glossMapTexCoords2 : TEXCOORDn;
+#endif
+#if defined( HIDE_BY_SECOND_UV )
+    float2 albedoMapTexCoord2 : TEXCOORDn;
 #endif
 ]]>
             </CodeInjection>
@@ -296,11 +334,46 @@ float2 m_getUVRotationSinCos( )
     return mSinCos;
 }
 #endif
+#if defined( MESH_JIGGLING )
+float3 m_getQuaternionDeformPos( float mAngle, float3 mAxis, float3 mPos )
+{
+    float4 mQr = float4(0,0,0,0);
+    float  mHalfAngle = ( mAngle * 0.5 ) * 3.14159 / 180.0;
+    mQr.x = mAxis.x * sin( mHalfAngle );
+    mQr.y = mAxis.y * sin( mHalfAngle );
+    mQr.z = mAxis.z * sin( mHalfAngle );
+    mQr.w = cos( mHalfAngle );
+    float3 mQ = float3(mQr.x,mQr.y,mQr.z);
+    float3 mDeformPos = mPos + 2.0 * cross( mQ, cross(mQ, mPos) + mQr.w*mPos );
+    return mDeformPos;
+}
+#endif
 ]]>
             </CodeInjection>
             <CodeInjection position="GET_POSITION_VS">
 <![CDATA[
     float3 mPos          = In.position.xyz;
+#if defined( MESH_JIGGLING )
+    {
+        float  mAttenuation = In.texCoords1.x;
+        float3 mAxis        = axisCompression.xyz;
+        float  mCompression = axisCompression.w;
+        float  mAmplitude           = amplFreq.x;
+        float  mFrequency           = amplFreq.y;
+        float  mJigAmountElements   = 1 - amplFreq.z;
+        float  mTime                = amplFreq.w;
+        float  mSinus = sin(2.78*In.color.a + 5.67*mTime*mFrequency)*sin(16.75*In.color.a - 28.45*mTime*mFrequency);
+        float  mAngle = 10*mAmplitude*saturate(mSinus);
+        mAngle *= saturate(sign( sin(0.53*mTime + 23.16*In.color.a) * sin(1.476*mTime - 12.78*In.color.a ) - mJigAmountElements ));
+
+        float3 mPivot = mCompression*(2.0*In.color.xyz - 1.0);
+        mPos -= mPivot; 
+        float3 mDeformPos = m_getQuaternionDeformPos(mAngle,mAxis,mPos);
+        mPos = lerp( mPos, mDeformPos, mAttenuation );   
+        mPos += mPivot;
+    }
+    return mPos;
+#endif
 #if defined( BELT_KUHN )
     mPos.x += beltPos*In.color.x;
     mPos.x += 2*beltPos*In.color.z;
@@ -405,7 +478,10 @@ float2 m_getUVRotationSinCos( )
 #endif
 #if defined( DECAL_RENDER )
     // Pass second UVSet to the Pixel Shader
-    Out.glossMapTexCoords2 = convertDefaultTexCoords(In, In.texCoords1.xy);
+    Out.glossMapTexCoords2 = convertDefaultTexCoords( In, In.texCoords1.xy );
+#endif
+#if defined( HIDE_BY_SECOND_UV )
+    Out.albedoMapTexCoord2 = convertDefaultTexCoords( In, In.texCoords1.xy );
 #endif
 #if defined( UV_ROTATE ) && defined( ALBEDO_MAP )
     float2 mOutgoingUV = getDefaultTexCoords(In);
@@ -679,7 +755,7 @@ globals.maxSpecularIntensity = 0.5; // iron
     #if defined( WINDOW )
         albedo.xyz += clamp( 0.65 *( 1-globals.gDirt ), 0.0, 1.0 );
     #else
-        float3 mDirtColor = RDTColor; // HardCoded Dirt Color
+        float3 mDirtColor = float3( 0.20, 0.14, 0.08 ); // HardCoded Dirt Color
         albedo.xyz = lerp( mDirtColor, albedo.xyz, globals.gDirt); // DirtColor lerp
     #endif
     albedo.xyz *= globals.gAO; // Multiply AO for DIFFUSE
@@ -759,6 +835,12 @@ globals.maxSpecularIntensity = 0.5; // iron
     #if defined( WINDOW )
         oColor.a += clamp( 0.65*(1-globals.gDirt), 0.0, 1.0 );
     #endif
+#endif
+#if defined( HIDE_BY_SECOND_UV )
+    float mVisibility = 1.0;
+    float refX = In.vs.albedoMapTexCoord2.x;
+    mVisibility = refX >= uvHide.x && refX <= uvHide.y;
+    clip( mVisibility - 0.5 );
 #endif
 
 #if defined(DEBUG_SHOW_PARALLAX)
