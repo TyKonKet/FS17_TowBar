@@ -54,7 +54,7 @@
             <de>Fahrzeug abhängen</de>
             <fr>Détacher l'objet</fr>
             <nl>Ontkoppel voorwerp</nl>
-            <pl>Odczep obiekt</pl>
+            <pl>Odczep pojazd</pl>
         </text>
         <text name="PULLER_ATTACH">
             <en>Attach object</en>
@@ -62,19 +62,23 @@
             <de>Fahrzeug ankuppeln</de>
             <fr>Joindre l'objet</fr>
             <nl>Koppel voorwerp</nl>
-            <pl>Zaczep obiekt</pl>
+            <pl>Zaczep pojazd</pl>
         </text>
         <text name="input_PULLER_TOGGLE_THROTTLE">
             <en>Toggle pulled vehicle throttle</en>
+            <pl>Przełączanie sterowania gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_ENABLE_THROTTLE">
             <en>Turn on pulled vehicle throttle</en>
+            <pl>Włącz sterowanie gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_DISABLE_THROTTLE">
             <en>Turn off pulled vehicle throttle</en>
+            <pl>Wyłącz sterowanie gazem w pojeździe holowanym</pl>
         </text>
         <text name="PULLER_DISABLE_THROTTLE_WARNING">
             <en>Please turn off pulled vehicle throttle before detaching</en>
+            <pl>Zanim odczepisz pojazd, musisz wyłączyć sterowanie gazem!</pl>
         </text>
     </l10n>
     <inputBindings>
